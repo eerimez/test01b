@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(appname CXX)
+project(test01b CXX)
 
 # C++14
 set(CMAKE_CXX_STANDARD 14)
