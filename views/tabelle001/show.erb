@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<%#include "tabelle001.h" %>
+<% tfetch(Tabelle001, tabelle001); %>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= controller()->name() + ": " + controller()->activeAction() %></title>
+</head>
+<body>
+<p style="color: red"><%=$ error %></p>
+<p style="color: green"><%=$ notice %></p>
+
+<h1>Showing Tabelle001</h1>
+<dt>ID</dt><dd><%= tabelle001.id() %></dd><br />
+<dt>Name</dt><dd><%= tabelle001.name() %></dd><br />
+
+<%== linkTo("Edit", urla("save", tabelle001.id())) %> |
+<%== linkTo("Back", urla("index")) %>
+
+</body>
+</html>

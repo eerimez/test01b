@@ -15,3 +15,5 @@ include(../appbase.pri)
 
 HEADERS += applicationcontroller.h
 SOURCES += applicationcontroller.cpp
+HEADERS += tabelle001controller.h
+SOURCES += tabelle001controller.cpp

@@ -12,3 +12,6 @@ MOC_DIR = .obj/
 OBJECTS_DIR = .obj/
 
 include(../appbase.pri)
+HEADERS += sqlobjects/tabelle001object.h
+HEADERS += tabelle001.h
+SOURCES += tabelle001.cpp

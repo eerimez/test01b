@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<%#include "tabelle001.h" %>
+<% tfetch(QVariantMap, tabelle001); %>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= controller()->name() + ": " + controller()->activeAction() %></title>
+</head>
+<body>
+<p style="color: red"><%=$ error %></p>
+<p style="color: green"><%=$ notice %></p>
+
+<h1>New Tabelle001</h1>
+
+<%== formTag(urla("create"), Tf::Post) %>
+  <p>
+    <label>ID<br /><input name="tabelle001[id]" value="<%= tabelle001["id"] %>" /></label>
+  </p>
+  <p>
+    <label>Name<br /><input name="tabelle001[name]" value="<%= tabelle001["name"] %>" /></label>
+  </p>
+  <p>
+    <input type="submit" value="Create" />
+  </p>
+</form>
+
+<%== linkTo("Back", urla("index")) %>
+
+</body>
+</html>
