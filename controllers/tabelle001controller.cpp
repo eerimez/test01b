@@ -51,6 +51,7 @@ void Tabelle001Controller::save(const QString &id)
     case Tf::Get: {
         auto model = Tabelle001::get(id);
         if (!model.isNull()) {
+            session().insert("tabelle001_lockRevision", model.lockRevision());
             auto tabelle001 = model.toVariantMap();
             texport(tabelle001);
             render();
@@ -59,7 +60,8 @@ void Tabelle001Controller::save(const QString &id)
 
     case Tf::Post: {
         QString error;
-        auto model = Tabelle001::get(id);
+        int rev = session().value("tabelle001_lockRevision").toInt();
+        auto model = Tabelle001::get(id, rev);
         
         if (model.isNull()) {
             error = "Original data not found. It may have been updated/removed by another transaction.";

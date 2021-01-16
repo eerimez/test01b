@@ -25,6 +25,9 @@ public:
     void setId(const QString &id);
     QString name() const;
     void setName(const QString &name);
+    QString lockRevision() const;
+    QDateTime createdAt() const;
+    QDateTime updatedAt() const;
     Tabelle001 &operator=(const Tabelle001 &other);
 
     bool create() override { return TAbstractModel::create(); }
@@ -35,6 +38,7 @@ public:
     static Tabelle001 create(const QString &id, const QString &name);
     static Tabelle001 create(const QVariantMap &values);
     static Tabelle001 get(const QString &id);
+    static Tabelle001 get(const QString &id, int lockRevision);
     static int count();
     static QList<Tabelle001> getAll();
     static QJsonArray getAllJson();

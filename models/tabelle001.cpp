@@ -45,6 +45,21 @@ void Tabelle001::setName(const QString &name)
     d->name = name;
 }
 
+QString Tabelle001::lockRevision() const
+{
+    return d->lock_revision;
+}
+
+QDateTime Tabelle001::createdAt() const
+{
+    return d->created_at;
+}
+
+QDateTime Tabelle001::updatedAt() const
+{
+    return d->updated_at;
+}
+
 Tabelle001 &Tabelle001::operator=(const Tabelle001 &other)
 {
     d = other.d;  // increments the reference count of the data
@@ -76,6 +91,15 @@ Tabelle001 Tabelle001::get(const QString &id)
 {
     TSqlORMapper<Tabelle001Object> mapper;
     return Tabelle001(mapper.findByPrimaryKey(id));
+}
+
+Tabelle001 Tabelle001::get(const QString &id, int lockRevision)
+{
+    TSqlORMapper<Tabelle001Object> mapper;
+    TCriteria cri;
+    cri.add(Tabelle001Object::Id, id);
+    cri.add(Tabelle001Object::LockRevision, lockRevision);
+    return Tabelle001(mapper.findFirst(cri));
 }
 
 int Tabelle001::count()
