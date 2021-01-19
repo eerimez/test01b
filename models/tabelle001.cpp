@@ -1,6 +1,22 @@
 #include <TreeFrogModel>
 #include "tabelle001.h"
 #include "sqlobjects/tabelle001object.h"
+#include "../controllers/http_criteria.h"
+
+const QMap<QString, int> Tabelle001::propertyIndexMap{
+        {"id", Tabelle001Object::PropertyIndex::Id},
+        {"name", Tabelle001Object::PropertyIndex::Name},
+        {"lockRevision", Tabelle001Object::PropertyIndex::LockRevision},
+        {"createdAt", Tabelle001Object::PropertyIndex::CreatedAt},
+        {"updatedAt", Tabelle001Object::PropertyIndex::UpdatedAt},
+//        {"createdById", Tabelle001Object::PropertyIndex::CreatedById},
+//        {"updatedById", Tabelle001Object::PropertyIndex::UpdatedById}
+};
+
+const QMap<QString, int> &Tabelle001::getPropertyIndexMap() {
+    return propertyIndexMap;
+}
+
 
 Tabelle001::Tabelle001() :
     TAbstractModel(),
@@ -85,6 +101,19 @@ Tabelle001 Tabelle001::create(const QVariantMap &values)
         model.d->clear();
     }
     return model;
+}
+
+QJsonArray Tabelle001::getJson(const HttpCriteria &criteria)
+{
+    QJsonArray jsonArray;
+    auto *mapper = dynamic_cast<TSqlORMapper<Tabelle001Object> *>(criteria.getMapper());
+
+    if (mapper->find(criteria.getCriteria()) > 0) {
+        for (TSqlORMapperIterator<Tabelle001Object> i(*mapper); i.hasNext(); ) {
+            jsonArray.append(Tabelle001(i.next()).toJsonObject());
+        }
+    }
+    return jsonArray;
 }
 
 Tabelle001 Tabelle001::get(const QString &id)

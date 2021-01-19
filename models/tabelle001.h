@@ -3,15 +3,14 @@
 
 #include <QStringList>
 #include <QDateTime>
+#include <QJsonArray>
 #include <QVariant>
 #include <QSharedDataPointer>
 #include <TGlobal>
 #include <TAbstractModel>
 
-class TModelObject;
-class Tabelle001Object;
-class QJsonArray;
-
+#include "sqlobjects/tabelle001object.h"
+#include "../controllers/http_criteria.h"
 
 class T_MODEL_EXPORT Tabelle001 : public TAbstractModel
 {
@@ -39,17 +38,23 @@ public:
     static Tabelle001 create(const QVariantMap &values);
     static Tabelle001 get(const QString &id);
     static Tabelle001 get(const QString &id, int lockRevision);
+    static QJsonArray getJson(const HttpCriteria &criteria);
+
     static int count();
     static QList<Tabelle001> getAll();
     static QJsonArray getAllJson();
 
+    static const QMap<QString, int> &getPropertyIndexMap();
+
 private:
+    const static QMap<QString, int> propertyIndexMap;
     QSharedDataPointer<Tabelle001Object> d;
 
     TModelObject *modelData() override;
     const TModelObject *modelData() const override;
     friend QDataStream &operator<<(QDataStream &ds, const Tabelle001 &model);
     friend QDataStream &operator>>(QDataStream &ds, Tabelle001 &model);
+
 };
 
 Q_DECLARE_METATYPE(Tabelle001)
