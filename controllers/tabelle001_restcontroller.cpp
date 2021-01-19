@@ -25,7 +25,7 @@ void Tabelle001RestController::get() {
 
 
 void Tabelle001RestController::post() {
-    tDebug("TOneRestController::create");
+    tDebug("TOneRestController::post");
 
     QJsonDocument qjd = getDocument();
 
@@ -38,7 +38,13 @@ void Tabelle001RestController::post() {
     qvm.remove("createdById");
     qvm.remove("updatedById");
 
-    renderJsonSuccess(Tabelle001::create(qvm).toJsonObject());
+    const auto record = Tabelle001::create(qvm);
+
+    if (record.isNull()) {
+        renderJsonFail("Create record failed");
+    } else {
+        renderJsonSuccess(record.toJsonObject());
+    }
 }
 
 void Tabelle001RestController::put() {
@@ -70,14 +76,14 @@ void Tabelle001RestController::put() {
             }
             renderJsonSuccess(rArray);
         } else {
-            throw RuntimeException("JSON type not object or array", __FILE__, __LINE__);
+            throw RuntimeException("Invalid JSON payload", __FILE__, __LINE__);
         }
     }
     catch (TfException &e) {
         rollbackTransaction();
         this->setStatusCode(Tf::InternalServerError);
         tDebug("Error: %s", e.message().toStdString().c_str());
-        renderJsonFail(e.message());
+        renderJsonFail(e.message().toStdString().c_str());
     }
 }
 
