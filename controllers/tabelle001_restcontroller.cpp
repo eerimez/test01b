@@ -1,6 +1,5 @@
 #include "tabelle001_restcontroller.h"
 #include <tabelle001.h>
-//#include "http_criteria.h"
 
 void Tabelle001RestController::get() {
     tDebug("Tabelle001RestController::get");
@@ -10,7 +9,6 @@ void Tabelle001RestController::get() {
 
     try {
         HttpCriteria httpCriteria(propertyMap, mapper);
-        httpCriteria.add(Tabelle001Object::PropertyIndex::Id, "119a7fb3-a288-437f-8877-8e94f6b456c2");
         auto r = httpRequest();
         httpCriteria.add(r);
         return renderJsonSuccess(Tabelle001::getJson(httpCriteria), httpCriteria.getCount());
@@ -23,6 +21,25 @@ void Tabelle001RestController::get() {
     }
 }
 
+void Tabelle001RestController::get(const QString &id) {
+    tDebug("Tabelle001RestController::get id");
+
+    auto uuid = QUuid(id);
+    if (uuid.isNull()) {
+        tDebug("Tf::BadRequest");
+        setStatusCode(Tf::BadRequest);
+        renderJsonFail("Invalid parameter");
+        return;
+    }
+
+    auto record = Tabelle001::get(id);
+    if (record.isNull()) {
+        renderJsonFail("Record not found");
+        return;
+    }
+
+    renderJsonSuccess(record.toJsonObject());
+}
 
 void Tabelle001RestController::post() {
     tDebug("TOneRestController::post");

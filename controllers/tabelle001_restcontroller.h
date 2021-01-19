@@ -15,6 +15,7 @@ private:
 
 public slots:
     void get();
+    void get(const QString &id);
     void post();
     void put();
 };
