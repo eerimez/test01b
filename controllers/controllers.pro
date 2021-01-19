@@ -17,3 +17,5 @@ HEADERS += applicationcontroller.h
 SOURCES += applicationcontroller.cpp
 HEADERS += tabelle001controller.h
 SOURCES += tabelle001controller.cpp
+HEADERS += tabelle002controller.h
+SOURCES += tabelle002controller.cpp

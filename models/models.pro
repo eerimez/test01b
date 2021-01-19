@@ -15,3 +15,6 @@ include(../appbase.pri)
 HEADERS += sqlobjects/tabelle001object.h
 HEADERS += tabelle001.h
 SOURCES += tabelle001.cpp
+HEADERS += sqlobjects/tabelle002object.h
+HEADERS += tabelle002.h
+SOURCES += tabelle002.cpp

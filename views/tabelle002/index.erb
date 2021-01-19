@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<%#include "tabelle002.h" %>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= controller()->name() + ": " + controller()->activeAction() %></title>
+</head>
+<body>
+
+<h1>Listing Tabelle002</h1>
+
+<%== linkTo("Create a new Tabelle002", urla("create")) %><br />
+<br />
+<table border="1" cellpadding="5" style="border: 1px #d0d0d0 solid; border-collapse: collapse;">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Tabelle 001 ID</th>
+  </tr>
+<% tfetch(QList<Tabelle002>, tabelle002List); %>
+<% for (const auto &i : tabelle002List) { %>
+  <tr>
+    <td><%= i.id() %></td>
+    <td><%= i.name() %></td>
+    <td><%= i.tabelle001Id() %></td>
+    <td>
+      <%== linkTo("Show", urla("show", i.id())) %>
+      <%== linkTo("Edit", urla("save", i.id())) %>
+      <%== linkTo("Remove", urla("remove", i.id()), Tf::Post, "confirm('Are you sure?')") %>
+    </td>
+  </tr>
+<% } %>
+</table>
+
+</body>
+</html>
