@@ -1,25 +1,21 @@
 #ifndef RESTCONTROLLER_H
 #define RESTCONTROLLER_H
 
-#include <TActionController>
-#include "applicationhelper.h"
+#include "applicationcontroller.h"
 
-
-class T_CONTROLLER_EXPORT RestController : public TActionController
+class T_CONTROLLER_EXPORT RestController : public ApplicationController
 {
     Q_OBJECT
 public:
-    RestController();
-    virtual ~RestController();
+    RestController() : ApplicationController() {}
 
     void renderJsonSuccess(const QJsonValue &data, int count = 0);
     void renderJsonFail(const QString &msg);
     static QMap<QJsonParseError::ParseError, QString> jsonParseErrorMap;
 
-public slots:
-    void staticInitialize();
-    void staticRelease();
+    bool preFilter();
 
+public slots:
     void options();
     void options(const QString &arg1);
     void options(const QString &arg1, const QString &arg2);
@@ -27,7 +23,7 @@ public slots:
     void options(const QString &arg1, const QString &arg2, const QString &arg3, const QString &arg4);
 
 protected:
-    virtual bool preFilter();
+    QJsonDocument getDocument();
 };
 
 #endif // RESTCONTROLLER_H

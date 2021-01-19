@@ -1,22 +1,8 @@
 #include "restcontroller.h"
 
-
-RestController::RestController()
-    : TActionController()
-{ }
-
-RestController::~RestController()
-{ }
-
-void RestController::staticInitialize()
-{ }
-
-void RestController::staticRelease()
-{ }
-
 bool RestController::preFilter()
 {
-    tDebug("RestController::preFilter");
+    tDebug("RestController::preFilter");  // TODO: fix this
     httpResponse().header().addRawHeader(QByteArrayLiteral("Access-Control-Allow-Origin"), QByteArrayLiteral("*"));
     httpResponse().header().addRawHeader(QByteArrayLiteral("Access-Control-Allow-Methods"), QByteArrayLiteral("GET, PUT, DELETE, OPTIONS, POST"));
     httpResponse().header().addRawHeader(QByteArrayLiteral("Access-Control-Allow-Headers"),
@@ -102,6 +88,23 @@ void RestController::renderJsonFail(const QString &msg) {
     };
 
     renderJson(result);
+}
+
+QJsonDocument RestController::getDocument() {
+    QIODevice *qioDevice = this->httpRequest().rawBody();
+
+    if (!qioDevice->isOpen()) {
+        if (!qioDevice->open(QIODevice::ReadOnly)) {
+            throw RuntimeException("Could not open QIODevice", __FILE__, __LINE__);
+        }
+    }
+
+    QJsonParseError e{};
+    const QJsonDocument &qjd = QJsonDocument::fromJson(qioDevice->readAll(), &e);
+    if (e.error != QJsonParseError::NoError) {
+        throw RuntimeException(e.errorString(), __FILE__, __LINE__);
+    }
+    return qjd;
 }
 
 // Don't remove below this line
