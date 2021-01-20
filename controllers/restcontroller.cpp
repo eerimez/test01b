@@ -55,9 +55,6 @@ void RestController::options(const QString &arg1 __attribute__((unused)), const 
 }
 
 void RestController::renderJsonSuccess(const QJsonValue &data, int count) {
-//    QJsonObject result = QJsonObject();
-//    result.insert("success", true);
-//    result.insert("msg", QJsonValue::Null);
     QJsonObject result{
             {"success", true},
             {"msg", QJsonValue::Null}
@@ -75,11 +72,6 @@ void RestController::renderJsonSuccess(const QJsonValue &data, int count) {
 }
 
 void RestController::renderJsonFail(const QString &msg) {
-//    QJsonObject result = QJsonObject();
-//    result.insert("success", false);
-//    result.insert("msg", msg);
-//    result.insert("total", QJsonValue::Null);
-//    result.insert("data", QJsonValue::Null);
     QJsonObject result{
             {"success", false},
             {"msg", msg},
