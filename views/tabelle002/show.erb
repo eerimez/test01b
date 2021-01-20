@@ -14,6 +14,9 @@
 <dt>ID</dt><dd><%= tabelle002.id() %></dd><br />
 <dt>Name</dt><dd><%= tabelle002.name() %></dd><br />
 <dt>Tabelle 001 ID</dt><dd><%= tabelle002.tabelle001Id() %></dd><br />
+<dt>Created at</dt><dd><%= tabelle002.createdAt() %></dd><br />
+<dt>Updated at</dt><dd><%= tabelle002.updatedAt() %></dd><br />
+<dt>Lock Revision</dt><dd><%= tabelle002.lockRevision() %></dd><br />
 
 <%== linkTo("Edit", urla("save", tabelle002.id())) %> |
 <%== linkTo("Back", urla("index")) %>
