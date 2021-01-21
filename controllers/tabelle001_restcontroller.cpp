@@ -42,7 +42,7 @@ void Tabelle001RestController::get(const QString &id) {
 }
 
 void Tabelle001RestController::post() {
-    tDebug("TOneRestController::post");
+    tDebug("Tabelle001RestController::post");
 
     QJsonDocument qjd = getDocument();
 
@@ -65,7 +65,7 @@ void Tabelle001RestController::post() {
 }
 
 void Tabelle001RestController::put() {
-    tDebug("TOneRestController::put");
+    tDebug("Tabelle001RestController::put");
 
     try {
         QJsonDocument qjd = getDocument();

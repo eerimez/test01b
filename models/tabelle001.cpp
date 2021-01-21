@@ -17,6 +17,19 @@ const QMap<QString, int> &Tabelle001::getPropertyIndexMap() {
     return propertyIndexMap;
 }
 
+QJsonArray Tabelle001::getJson(const HttpCriteria &criteria)
+{
+    QJsonArray jsonArray;
+    auto *mapper = dynamic_cast<TSqlORMapper<Tabelle001Object> *>(criteria.getMapper());
+
+    if (mapper->find(criteria.getCriteria()) > 0) {
+        for (TSqlORMapperIterator<Tabelle001Object> i(*mapper); i.hasNext(); ) {
+            jsonArray.append(Tabelle001(i.next()).toJsonObject());
+        }
+    }
+    return jsonArray;
+}
+
 
 Tabelle001::Tabelle001() :
     TAbstractModel(),
@@ -101,19 +114,6 @@ Tabelle001 Tabelle001::create(const QVariantMap &values)
         model.d->clear();
     }
     return model;
-}
-
-QJsonArray Tabelle001::getJson(const HttpCriteria &criteria)
-{
-    QJsonArray jsonArray;
-    auto *mapper = dynamic_cast<TSqlORMapper<Tabelle001Object> *>(criteria.getMapper());
-
-    if (mapper->find(criteria.getCriteria()) > 0) {
-        for (TSqlORMapperIterator<Tabelle001Object> i(*mapper); i.hasNext(); ) {
-            jsonArray.append(Tabelle001(i.next()).toJsonObject());
-        }
-    }
-    return jsonArray;
 }
 
 Tabelle001 Tabelle001::get(const QString &id)
