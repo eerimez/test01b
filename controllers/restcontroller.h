@@ -9,8 +9,8 @@ class T_CONTROLLER_EXPORT RestController : public ApplicationController
 public:
     RestController() : ApplicationController() {}
 
-    void renderJsonSuccess(const QJsonValue &data, int count = 0);
-    void renderJsonFail(const QString &msg);
+    static void renderJsonSuccess(const QJsonValue &data, int count = 0);
+    static void renderJsonFail(const QString &msg);
     static QMap<QJsonParseError::ParseError, QString> jsonParseErrorMap;
 
     bool preFilter();
