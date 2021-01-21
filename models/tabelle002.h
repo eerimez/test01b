@@ -11,6 +11,7 @@
 class TModelObject;
 class Tabelle002Object;
 class QJsonArray;
+#include "../controllers/http_criteria.h"
 
 
 class T_MODEL_EXPORT Tabelle002 : public TAbstractModel
@@ -45,7 +46,14 @@ public:
     static QList<Tabelle002> getAll();
     static QJsonArray getAllJson();
 
+    static inline const QMap<QString, int> &getPropertyIndexMap() {
+        return propertyIndexMap;
+    }
+    static Tabelle002 getByTabelle001(const QString &parentId, const QString &id);
+    static QJsonArray getJson(const HttpCriteria &criteria);
+
 private:
+    const static QMap<QString, int> propertyIndexMap;
     QSharedDataPointer<Tabelle002Object> d;
 
     TModelObject *modelData() override;

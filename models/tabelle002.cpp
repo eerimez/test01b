@@ -2,6 +2,39 @@
 #include "tabelle002.h"
 #include "sqlobjects/tabelle002object.h"
 
+const QMap<QString, int> Tabelle002::propertyIndexMap{
+        {"id", Tabelle002Object::PropertyIndex::Id},
+        {"name", Tabelle002Object::PropertyIndex::Name},
+        {"tabelle001Id", Tabelle002Object::PropertyIndex::Tabelle001Id},
+        {"lockRevision", Tabelle002Object::PropertyIndex::LockRevision},
+        {"createdAt", Tabelle002Object::PropertyIndex::CreatedAt},
+        {"updatedAt", Tabelle002Object::PropertyIndex::UpdatedAt},
+//        {"createdById", Tabelle002Object::PropertyIndex::CreatedById},
+//        {"updatedById", Tabelle002Object::PropertyIndex::UpdatedById}
+};
+
+QJsonArray Tabelle002::getJson(const HttpCriteria &criteria)
+{
+    QJsonArray jsonArray;
+    auto *mapper = dynamic_cast<TSqlORMapper<Tabelle002Object> *>(criteria.getMapper());
+
+    if (mapper->find(criteria.getCriteria()) > 0) {
+        for (TSqlORMapperIterator<Tabelle002Object> i(*mapper); i.hasNext(); ) {
+            jsonArray.append(Tabelle002(i.next()).toJsonObject());
+        }
+    }
+    return jsonArray;
+}
+
+Tabelle002 Tabelle002::getByTabelle001(const QString &parentId, const QString &id)
+{
+    TSqlORMapper<Tabelle002Object> mapper;
+    TCriteria cri;
+    cri.add(Tabelle002Object::Tabelle001Id, parentId);
+    cri.add(Tabelle002Object::Id, id);
+    return Tabelle002(mapper.findFirst(cri));
+}
+
 Tabelle002::Tabelle002() :
     TAbstractModel(),
     d(new Tabelle002Object())
