@@ -202,13 +202,16 @@ void Tabelle001RestController::postTabelle002(const QString &parentId) {
     qvm.remove("updatedAt");
     qvm.remove("createdById");
     qvm.remove("updatedById");
-    qvm.remove("tabelle001Id");
-    qvm.insert("tabelle001Id", parentId);
+
+    const auto payloadParentId = qvm.value("tabelle001Id").toString();
+    if (payloadParentId != parentId) {
+        renderJsonFail("Parent ID mismatch");
+    }
 
     const auto record = Tabelle002::create(qvm);
 
     if (record.isNull()) {
-        QString msg = "Create record failed";
+        QString msg = "Create record failed: ";
         msg += __FILE__;
         msg += " ";
         msg += QString::number(__LINE__);
@@ -286,8 +289,10 @@ void Tabelle001RestController::putTabelle002(const QString &parentId) {
         qvm.remove("createdById");
         qvm.remove("updatedById");
 
-        qvm.remove(parent.first);
-        qvm.insert(parent.first, parent.second);
+        const auto payloadParentId = qvm.value(parent.second).toString();
+        if (payloadParentId != parent.second) {
+            renderJsonFail("Parent ID mismatch");
+        }
 
         const QVariant &vParentId = qvm.value("parentId");
         if (!vParentId.isNull() && !vParentId.toUuid().isNull()) {
